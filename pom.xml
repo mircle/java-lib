@@ -28,6 +28,7 @@ Contributors:
 		<module>quickbundle-struts</module>
 		<module>quickbundle-test</module>
 		<module>quickbundle-transform</module>
+		<module>quickbundle-rmwebdemo</module>
 	</modules>
 	
 	<build>
