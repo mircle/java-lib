@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.quickbundle.modules.message.dao.RmMessageDao">
+
+  <!-- <cache /> -->
+
+  <select id="list" parameterType="string" resultType="org.quickbundle.modules.message.vo.RmMessageVo">
+    SELECT
+          *
+    FROM RM_MESSAGE
+    WHERE 1=1 ${value}
+  </select>
+
+</mapper>
