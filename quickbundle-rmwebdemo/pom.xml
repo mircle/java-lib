@@ -610,25 +610,6 @@ encoding/tools.bat=GBK]]>
 			<version>${mybatis-spring.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>
-			<version>${jasperreports.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>poi-ooxml</artifactId>
-					<groupId>org.apache.poi</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jdtcore</artifactId>
-					<groupId>eclipse</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jfreechart</artifactId>
-					<groupId>jfree</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 			<version>${quartz.version}</version>
