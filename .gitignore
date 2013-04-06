@@ -2,3 +2,6 @@
 */.settings/*
 */.project
 */.classpath
+quickbundle-rmwebdemo/WebContent/WEB-INF/classes
+quickbundle-rmwebdemo/WebContent/WEB-INF/lib
+quickbundle-rmwebdemo/WebContent/upload/*
