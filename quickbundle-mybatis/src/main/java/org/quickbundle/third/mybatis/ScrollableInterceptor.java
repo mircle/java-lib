@@ -31,7 +31,7 @@ public class ScrollableInterceptor implements Interceptor {
 		BoundSql boundSql = statementHandler.getBoundSql();
 		MetaObject metaStatementHandler = SystemMetaObject.forObject(statementHandler);
 		RowBounds rowBounds = (RowBounds) metaStatementHandler.getValue("delegate.rowBounds");
-		if (rowBounds == null || rowBounds == RowBounds.DEFAULT) {
+		if (rowBounds == null || rowBounds == RowBounds.DEFAULT || rowBounds.getOffset() < 0 || rowBounds.getLimit() < 0) {
 			return invocation.proceed();
 		}
 		Configuration configuration = (Configuration) metaStatementHandler.getValue("delegate.configuration");
