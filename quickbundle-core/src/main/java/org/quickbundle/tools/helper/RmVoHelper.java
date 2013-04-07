@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONArray;
@@ -595,7 +596,7 @@ public final class RmVoHelper implements ICoreConstants {
     	Object ip = null;
     	try {
     		clz = Class.forName("org.quickbundle.project.RmProjectHelper");
-    		ip = clz.getMethod("getIp", HttpServletRequest.class).invoke(clz, new Object[]{request});
+    		ip = clz.getMethod("getIp", ServletRequest.class).invoke(clz, new Object[]{request});
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		} catch (IllegalArgumentException e) {
@@ -617,7 +618,7 @@ public final class RmVoHelper implements ICoreConstants {
     	Object ip = null;
     	try {
     		clz = Class.forName("org.quickbundle.project.RmProjectHelper");
-    		ip = clz.getMethod("getRmUserId", HttpServletRequest.class).invoke(clz, new Object[]{request});
+    		ip = clz.getMethod("getRmUserId", ServletRequest.class).invoke(clz, new Object[]{request});
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		} catch (IllegalArgumentException e) {
