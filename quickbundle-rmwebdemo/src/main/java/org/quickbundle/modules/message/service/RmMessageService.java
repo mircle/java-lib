@@ -2,6 +2,7 @@ package org.quickbundle.modules.message.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.quickbundle.modules.message.IRmMessageConstants;
 import org.quickbundle.modules.message.dao.RmMessageDao;
@@ -18,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class RmMessageService implements IRmMessageConstants {
 
 	@Autowired
-	private RmMessageDao dao;
+	private RmMessageDao rmMessageDao;
 	
     /**
      * 插入单条记录
@@ -27,7 +28,7 @@ public class RmMessageService implements IRmMessageConstants {
      * @return 若添加成功，返回新生成的Oid
      */
     public String insert(RmMessageVo vo) {
-        String id = dao.insert(vo);
+        String id = rmMessageDao.insert(vo);
         //RmLogHelper.log(TABLE_LOG_TYPE_NAME, "插入了1条记录,id=" + String.valueOf(id));
 		return id;
     }
@@ -39,7 +40,7 @@ public class RmMessageService implements IRmMessageConstants {
      * @return 返回新生成的id数组
      */
     public String[] insert(RmMessageVo[] vos) {
-        String[] aId = dao.insert(vos);
+        String[] aId = rmMessageDao.insert(vos);
         //RmLogHelper.log(TABLE_LOG_TYPE_NAME, "插入了" + vos.length + "条记录,id=" + RmStringHelper.ArrayToString(aId, ","));
         return aId;
     }
@@ -51,7 +52,7 @@ public class RmMessageService implements IRmMessageConstants {
      * @return 成功删除的记录数
      */
     public int delete(String id) {
-		int sum = dao.delete(id);
+		int sum = rmMessageDao.delete(id);
 		//RmLogHelper.log(TABLE_LOG_TYPE_NAME, "删除了" + sum + "条记录,id=" + String.valueOf(id));
 		return sum;
     }
@@ -63,20 +64,9 @@ public class RmMessageService implements IRmMessageConstants {
      * @return 成功删除的记录数
      */
     public int delete(String ids[]) {
-		int sum = dao.delete(ids);
+		int sum = rmMessageDao.delete(ids);
         //RmLogHelper.log(TABLE_LOG_TYPE_NAME, "删除了" + sum + "条记录,id=" + RmStringHelper.ArrayToString(ids, ","));
 		return sum;
-    }
-
-    /**
-     * 根据Id进行查询
-     * 
-     * @param id 用于查找的id
-     * @return 查询到的VO对象
-     */
-    public RmMessageVo get(String id) {
-		RmMessageVo vo = dao.get(id);
-		return vo;
     }
 
     /**
@@ -86,7 +76,7 @@ public class RmMessageService implements IRmMessageConstants {
      * @return 成功更新的记录数
      */
     public int update(RmMessageVo vo) {
-		int sum = dao.update(vo);
+		int sum = rmMessageDao.update(vo);
         //RmLogHelper.log(TABLE_LOG_TYPE_NAME, "更新了" + sum + "条记录,id=" + String.valueOf(vo.getId()));
 		return sum;
     }
@@ -98,7 +88,7 @@ public class RmMessageService implements IRmMessageConstants {
      * @return 成功更新的记录最终数量
      */
 	public int update(RmMessageVo[] vos) {
-		int[] sum = dao.update(vos);
+		int[] sum = rmMessageDao.update(vos);
 		int finalSum = 0;
 		for (int i = 0; i < sum.length; i++) {
 			finalSum += sum[i];
@@ -134,13 +124,24 @@ public class RmMessageService implements IRmMessageConstants {
 	}
 
     /**
+     * 根据Id进行查询
+     * 
+     * @param id 用于查找的id
+     * @return 查询到的VO对象
+     */
+    public RmMessageVo get(String id) {
+		RmMessageVo vo = rmMessageDao.get(id);
+		return vo;
+    }
+    
+    /**
      * 查询总记录数，带查询条件
      * 
      * @param queryCondition 查询条件
      * @return 总记录数
      */
     public int getCount(String queryCondition) {
-		int sum = dao.getCount(queryCondition);
+		int sum = rmMessageDao.getCount(queryCondition);
 		return sum;
     }
 
@@ -165,7 +166,7 @@ public class RmMessageService implements IRmMessageConstants {
      * @return 查询到的VO列表
      */
     public List<RmMessageVo> list(String queryCondition, String orderStr, int startIndex, int size) {
-        return list(queryCondition, orderStr, startIndex, size, true);
+        return list(queryCondition, orderStr, startIndex, size, false);
     }
     
     /**
@@ -179,7 +180,19 @@ public class RmMessageService implements IRmMessageConstants {
      * @return 查询到的VO列表
      */
     public List<RmMessageVo> list(String queryCondition, String orderStr, int startIndex, int size, boolean allClumn) {
-        List<RmMessageVo> lResult = dao.list(queryCondition, orderStr, startIndex, size, allClumn);
+        List<RmMessageVo> lResult = rmMessageDao.list(queryCondition, orderStr, startIndex, size, allClumn);
         return lResult;
+    }
+    
+    /**
+     * @param searchPara 搜索参数的Map
+     * @param orderStr 排序字符
+     * @param startIndex 开始位置(第一条是1，第二条是2...)
+     * @param size 查询多少条记录(size小于等于0时,忽略翻页查询全部)
+     * @return 查询到的VO列表
+     */
+    public List<RmMessageVo> search(Map<String, Object> searchPara, String orderStr, int startIndex, int size) {
+    	List<RmMessageVo> lResult = rmMessageDao.search(searchPara, orderStr, startIndex, size);
+    	return lResult;
     }
 }

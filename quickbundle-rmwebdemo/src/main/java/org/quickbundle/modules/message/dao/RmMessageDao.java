@@ -133,7 +133,7 @@ public class RmMessageDao extends RmSqlSessionDaoSupport implements IRmMessageCo
     /**
      * 功能: 传入查询参数Map，获得所有的VO对象列表，带翻页，带排序字符
      * 
-     * @param searchPara
+     * @param searchPara 搜索参数的Map
      * @param orderStr 排序字符
      * @param startIndex 开始位置(第一条是1，第二条是2...)
      * @param size 查询多少条记录(size小于等于0时,忽略翻页查询全部)

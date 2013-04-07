@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page import="org.quickbundle.tools.helper.RmVoHelper" %>
-<%@ page import="org.quickbundle.modules.message.rmmessage.vo.RmMessageVo" %>
-<%@ page import="org.quickbundle.modules.message.rmmessage.util.IRmMessageConstants" %>
+<%@ page import="org.quickbundle.modules.message.vo.RmMessageVo" %>
+<%@ page import="org.quickbundle.modules.message.IRmMessageConstants" %>
 <%  //判断是否为修改页面
   	RmMessageVo resultVo = null;  //定义一个临时的vo变量
 	boolean isModify = false;  //定义变量,标识本页面是否修改(或者新增)
@@ -22,14 +22,14 @@
 <script type="text/javascript">
 	var rmActionName = "RmMessageAction";
 	function insert_onClick(){  //插入单条数据
-    	form.action="<%=request.getContextPath()%>/" + rmActionName + ".do?cmd=insert";
+    	form.action="<%=request.getContextPath()%>/rmmessage/insert";
 	    form.submit();
 	}
   	function update_onClick(id){  //保存修改后的单条数据
     	if(!getConfirm()) {  //如果用户在确认对话框中点"取消"
   			return false;
 		}
-	    form.action="<%=request.getContextPath()%>/" + rmActionName + ".do?cmd=update";
+	    form.action="<%=request.getContextPath()%>/rmmessage/update";
     	form.submit();
 	}
 </script>
@@ -45,65 +45,65 @@
 		<td width="25%">&nbsp;</td>
 	</tr>
 	<tr>
-		<td align="right"><span class="style_required_red">* </span><%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("biz_keyword")%></td>
+		<td align="right"><span class="style_required_red">* </span><%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("biz_keyword")%></td>
 		<td>
-			<input type="text" class="text_field" name="biz_keyword" inputName="<%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("biz_keyword")%>" value="" maxLength="25" validate="notNull;"/>
+			<input type="text" class="text_field" name="biz_keyword" inputName="<%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("biz_keyword")%>" value="" maxLength="25" validate="notNull;"/>
 		</td>
 		<td align="right"></td>
 		<td></td>
 	</tr>
 	<tr>
-		<td align="right"><span class="style_required_red">* </span><%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("sender_id")%></td>
+		<td align="right"><span class="style_required_red">* </span><%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("sender_id")%></td>
 		<td>
-			<input type="text" class="text_field" name="sender_id" inputName="<%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("sender_id")%>" value="0" maxLength="9" validate="notNull;"/>
+			<input type="text" class="text_field" name="sender_id" inputName="<%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("sender_id")%>" value="0" maxLength="9" validate="notNull;"/>
 		</td>
 		<td align="right"></td>
 		<td></td>
 	</tr>
 	<tr>
-		<td align="right"><%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("parent_message_id")%></td>
+		<td align="right"><%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("parent_message_id")%></td>
 		<td>
-			<input type="text" class="text_field_reference"  hiddenInputId="parent_message_id" name="parent_message_id_name" inputName="<%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("parent_message_id")%>" value="" /><input type="hidden" name="parent_message_id"><img class="refButtonClass" src="<%=request.getContextPath()%>/images/09.gif" onclick="javascript:getReference(new Array(form.parent_message_id, form.parent_message_id_name), '<%=request.getContextPath()%>/', '<%=request.getContextPath()%>/RmMessageAction.do?cmd=queryReference&referenceInputType=radio');"/>
+			<input type="text" class="text_field_reference"  hiddenInputId="parent_message_id" name="parent_message_id_name" inputName="<%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("parent_message_id")%>" value="" /><input type="hidden" name="parent_message_id"><img class="refButtonClass" src="<%=request.getContextPath()%>/images/09.gif" onclick="javascript:getReference(new Array(form.parent_message_id, form.parent_message_id_name), '<%=request.getContextPath()%>/', '<%=request.getContextPath()%>/RmMessageAction.do?cmd=queryReference&referenceInputType=radio');"/>
 		</td>
 		<td align="right"></td>
 		<td></td>
 	</tr>
 	<tr>
-		<td align="right"><%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("owner_org_id")%></td>
+		<td align="right"><%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("owner_org_id")%></td>
 		<td>
-			<input type="text" class="text_field" name="owner_org_id" inputName="<%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("owner_org_id")%>" value="" maxLength="25" />
+			<input type="text" class="text_field" name="owner_org_id" inputName="<%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("owner_org_id")%>" value="" maxLength="25" />
 		</td>
 		<td align="right"></td>
 		<td></td>
 	</tr>
 	<tr>
-		<td align="right"><%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("template_id")%></td>
+		<td align="right"><%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("template_id")%></td>
 		<td>
-			<input type="text" class="text_field" name="template_id" inputName="<%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("template_id")%>" value="" maxLength="9" />
+			<input type="text" class="text_field" name="template_id" inputName="<%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("template_id")%>" value="" maxLength="9" />
 		</td>
 		<td align="right"></td>
 		<td></td>
 	</tr>
 	<tr>
-		<td align="right"><%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("is_affix")%></td>
+		<td align="right"><%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("is_affix")%></td>
 		<td>
-			<input type="text" class="text_field" name="is_affix" inputName="<%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("is_affix")%>" value="" maxLength="1" />
+			<input type="text" class="text_field" name="is_affix" inputName="<%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("is_affix")%>" value="" maxLength="1" />
 		</td>
 		<td align="right"></td>
 		<td></td>
 	</tr>
 	<tr>
-		<td align="right"><%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("record_id")%></td>
+		<td align="right"><%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("record_id")%></td>
 		<td>
-			<input type="text" class="text_field" name="record_id" inputName="<%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("record_id")%>" value="" maxLength="25" />
+			<input type="text" class="text_field" name="record_id" inputName="<%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("record_id")%>" value="" maxLength="25" />
 		</td>
 		<td align="right"></td>
 		<td></td>
 	</tr>
 	<tr>
-		<td align="right"><%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("message_xml_context")%></td>
+		<td align="right"><%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("message_xml_context")%></td>
 		<td colspan="3">
-			<textarea class="textarea_limit_words" cols="60" rows="5" name="message_xml_context" inputName="<%=IRmMessageConstants.TABLE_COLUMN_CHINESE.get("message_xml_context")%>" maxLength="32767" ></textarea>
+			<textarea class="textarea_limit_words" cols="60" rows="5" name="message_xml_context" inputName="<%=IRmMessageConstants.TABLE_COLUMN_DISPLAY.get("message_xml_context")%>" maxLength="32767" ></textarea>
 		</td>
 	</tr>
 	</table>
@@ -113,7 +113,7 @@
 <table align="center">
 	<tr>
 		<td><br>
-			<input type="button" class="button_ellipse" id="button_save" value="保存" onclickto="javascript:<%=isModify?"update_onClick()":"insert_onClick()"%>"/>
+			<input type="button" class="button_ellipse" id="button_save" value="保存" onclickto="javascript:${action}_onClick()"/>
 			<input type="button" class="button_ellipse" id="button_cancel" value="取消" onclick="javascript:history.go(-1)"/>
 			<input type="reset" class="button_ellipse" id="button_reset" value="重置"/>
 		</td>
