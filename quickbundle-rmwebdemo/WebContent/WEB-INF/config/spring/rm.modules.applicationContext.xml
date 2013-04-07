@@ -41,22 +41,6 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 
-
-	<!--配置RmQuickQuery的bean-->
-	<bean id="IRmQuickQueryService" class="org.quickbundle.modules.quickquery.rmquickquery.service.impl.RmQuickQueryService">
-		<property name="dao" ref="IRmQuickQueryDao"/>
-	</bean>
-	<bean id="IRmQuickQueryDao" class="org.quickbundle.modules.quickquery.rmquickquery.dao.impl.RmQuickQueryDao">
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
-	<!--配置RmQuickQueryData的bean-->
-	<bean id="IRmQuickQueryDataService" class="org.quickbundle.modules.quickquery.rmquickquerydata.service.impl.RmQuickQueryDataService">
-		<property name="dao" ref="IRmQuickQueryDataDao"/>
-	</bean>
-	<bean id="IRmQuickQueryDataDao" class="org.quickbundle.modules.quickquery.rmquickquerydata.dao.impl.RmQuickQueryDataDao">
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
-	
 	<!--开始 配置RmAffix的bean-->
 	<!--RmAffix的业务层-->
 	<bean id="IRmAffixService" class="org.quickbundle.modules.affix.rmaffix.service.impl.RmAffixService">

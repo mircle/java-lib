@@ -38,8 +38,6 @@ node_monitor_log = insFld(foldersTree, gFld ("&nbsp;监控日志", "", "ftv2fold
 node_extendFunction = insFld(foldersTree, gFld ("&nbsp;扩展功能", "", "ftv2folderopen.gif", "ftv2folderclosed.gif"));
 	rmCodeGenerationRmCodeType_maintenance = insDoc(node_extendFunction, gLnk("0","&nbsp;编码表", "<%=request.getContextPath()%>/RmCodeTypeAction.do?cmd=queryAll", "ftv2link.gif"));	
 	rmCodeGenerationRmAffix_maintenance = insDoc(node_extendFunction, gLnk("0","&nbsp;附件", "<%=request.getContextPath()%>/RmAffixAction.do?cmd=queryAll", "ftv2link.gif"));
-	rmCodeGenerationRmQuickQuery_maintenance = insDoc(node_extendFunction, gLnk("0","&nbsp;快搜类别", "<%=request.getContextPath()%>/RmQuickQueryAction.do?cmd=queryAll", "ftv2link.gif"));
-	rmCodeGenerationRmQuickQueryData_maintenance = insDoc(node_extendFunction, gLnk("0","&nbsp;快搜数据", "<%=request.getContextPath()%>/RmQuickQueryDataAction.do?cmd=queryAll", "ftv2link.gif"));
 	
 node_profiler = insFld(foldersTree, gFld ("&nbsp;性能分析", "", "ftv2folderopen.gif", "ftv2folderclosed.gif"));
 	node_sqlProfiler = insDoc(node_profiler, gLnk("0","&nbsp;Request分析器", "<%=request.getContextPath()%>/admin/log/request_profiler.py", "ftv2link.gif"));

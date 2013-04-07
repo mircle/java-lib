@@ -36,30 +36,6 @@
 			<forward name="detailPage" path="/modules/lock/rmlock/detailRmLock.jsp"/>
 		</action>
 	
-		<!--RmQuickQueryRmQuickQuery的struts跳转规则-->
-		<action type="org.quickbundle.modules.quickquery.rmquickquery.web.RmQuickQueryAction" scope="request" path="/RmQuickQueryAction" parameter="cmd">
-			<forward name="toQueryAll" path="/RmQuickQueryAction.do?cmd=queryAll" redirect="true"/>
-			<forward name="listPage" path="/modules/quickquery/rmquickquery/listRmQuickQuery.jsp"/>
-			<forward name="updatePage" path="/modules/quickquery/rmquickquery/insertRmQuickQuery.jsp?isModify=1"/>
-			<forward name="detailPage" path="/modules/quickquery/rmquickquery/detailRmQuickQuery.jsp"/>
-			<forward name="referencePage" path="/modules/quickquery/rmquickquery/util/referenceRmQuickQuery.jsp"/>
-			</action>
-		<!--RmQuickQueryDataRmQuickQueryData的struts跳转规则-->
-		<action type="org.quickbundle.modules.quickquery.rmquickquerydata.web.RmQuickQueryDataAction" scope="request" path="/RmQuickQueryDataAction" parameter="cmd">
-			<forward name="toQueryAll" path="/RmQuickQueryDataAction.do?cmd=queryAll" redirect="true"/>
-			<forward name="listPage" path="/modules/quickquery/rmquickquerydata/listRmQuickQueryData.jsp"/>
-			<forward name="updatePage" path="/modules/quickquery/rmquickquerydata/insertRmQuickQueryData.jsp?isModify=1"/>
-			<forward name="detailPage" path="/modules/quickquery/rmquickquerydata/detailRmQuickQueryData.jsp"/>
-			</action>
-		<!--RmQuickQueryDataRmQuickQueryDataCondition的struts跳转规则-->
-	    <action type="org.quickbundle.modules.quickquery.rmquickquerydata.web.RmQuickQueryDataConditionAction" scope="request" path="/RmQuickQueryDataConditionAction" parameter="cmd">
-			<forward name="toQueryAll" path="/RmQuickQueryDataConditionAction.do?cmd=queryAll" redirect="true"/>
-			<forward name="listPage" path="/modules/quickquery/rmquickquerydata/condition/listRmQuickQueryData.jsp"/>
-			<forward name="updatePage" path="/modules/quickquery/rmquickquerydata/condition/insertRmQuickQueryData.jsp?isModify=1"/>
-			<forward name="detailPage" path="/modules/quickquery/rmquickquerydata/condition/detailRmQuickQueryData.jsp"/>
-		</action>
-		
-	
 		<!--RmAffix的struts跳转规则-->
 		<action type="org.quickbundle.modules.affix.rmaffix.web.RmAffixAction" scope="request" path="/RmAffixAction" parameter="cmd">
 			<!--查询全部页面的跳转，被其它方法调用-->
