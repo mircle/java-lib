@@ -31,10 +31,9 @@
 		<url>http://bugs.quickbundle.org</url>
 	</issueManagement>
 	<scm>
-		<connection>scm:svn:http://svn.quickbundle.org/quickbundle/trunk/quickbundle-core</connection>
-		<developerConnection>scm:svn:https://svn.quickbundle.org/quickbundle/trunk/quickbundle-core</developerConnection>
-		<tag>HEAD</tag>
-		<url>http://svn.quickbundle.org/quickbundle/trunk/quickbundle-core</url>
+		<connection>scm:git:https://github.com/quickbundle/java-web.git</connection>
+		<developerConnection>scm:git:https://github.com/quickbundle/java-web.git</developerConnection>
+		<url>https://github.com/quickbundle/java-web/tree/master/quickbundle-core</url>
 	</scm>
 	<build>
 		<plugins>

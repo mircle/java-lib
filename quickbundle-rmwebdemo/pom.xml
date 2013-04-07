@@ -45,6 +45,7 @@
 		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
 		<jdbc.driver.version>5.1.24</jdbc.driver.version>
 	</properties>
+
 	<licenses>
 		<license>
 			<name>Apache 2</name>
@@ -59,14 +60,14 @@
 	</organization>
 	<issueManagement>
 		<system>Bugzilla</system>
-		<url>http://pm.quickbundle.org</url>
+		<url>http://bugs.quickbundle.org</url>
 	</issueManagement>
 	<scm>
-		<connection>scm:svn:http://svn.quickbundle.org/quickbundle/trunk/quickbundle-rmwebdemo</connection>
-		<developerConnection>scm:svn:https://svn.quickbundle.org/quickbundle/trunk/quickbundle-rmwebdemo</developerConnection>
-		<tag>HEAD</tag>
-		<url>http://svn.quickbundle.org/quickbundle/trunk/quickbundle-rmwebdemo</url>
+		<connection>scm:git:https://github.com/quickbundle/java-web.git</connection>
+		<developerConnection>scm:git:https://github.com/quickbundle/java-web.git</developerConnection>
+		<url>https://github.com/quickbundle/java-web/tree/master/quickbundle-rmwebdemo</url>
 	</scm>
+
 	<build>
 		<finalName>rmdemo</finalName>
 		<resources>
