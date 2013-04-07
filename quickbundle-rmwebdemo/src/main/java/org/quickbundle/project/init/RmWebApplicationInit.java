@@ -202,6 +202,13 @@ public class RmWebApplicationInit implements ILoadOnStartup {
 		} catch (Exception e) {
 			RmLogHelper.error(RmWebApplicationInit.class, "setGenerateIdFromDb(): " + e.toString());
 		}
+		
+		try {
+			// RmIdFactory init id batch, union all?
+			RmConfig.getSingleton().setInitIdBatch(Boolean.parseBoolean(rmDoc.valueOf("/rm/org.quickbundle.project.init.RmConfig/initIdBatch/text()")));
+		} catch (Exception e) {
+			RmLogHelper.error(RmWebApplicationInit.class, "setGenerateIdFromDb(): " + e.toString());
+		}
 
 		try {
 			// 列表页默认分页数

@@ -1,15 +1,16 @@
 package org.quickbundle.modules.message.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.RowBounds;
-import org.quickbundle.base.beans.factory.RmBeanFactory;
+import org.apache.ibatis.session.SqlSession;
+import org.quickbundle.base.beans.factory.RmIdFactory;
 import org.quickbundle.modules.message.IRmMessageConstants;
 import org.quickbundle.modules.message.vo.RmMessageVo;
-import org.quickbundle.project.RmProjectHelper;
-import org.quickbundle.project.test.RmWebTestCase;
+import org.quickbundle.third.mybatis.ParaMap;
 import org.quickbundle.third.mybatis.RmSqlSessionDaoSupport;
-import org.quickbundle.tools.context.RmBeanHelper;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,7 +23,11 @@ public class RmMessageDao extends RmSqlSessionDaoSupport implements IRmMessageCo
      * @return 若添加成功，返回新生成的id
      */
     public String insert(RmMessageVo vo) {
-    	return null;
+    	if(vo.getId() == null || vo.getId().length() == 0) {
+    		vo.setId(RmIdFactory.requestId(TABLE_NAME)); //获得id
+    	}
+    	getSqlSession().insert(namespace("insert"), vo);
+    	return vo.getId();
     }
 
     /**
@@ -32,7 +37,16 @@ public class RmMessageDao extends RmSqlSessionDaoSupport implements IRmMessageCo
      * @return 若添加成功，返回新生成的id数组
      */
     public String[] insert(RmMessageVo[] vos) {
-    	return null;
+		String[] ids =RmIdFactory.requestId(TABLE_NAME, vos.length); //批量获得id
+		for(int i=0; i<vos.length; i++) {
+			vos[i].setId(ids[i]);
+		}
+		SqlSession session = getSqlSessionTemplate().getSqlSessionFactory().openSession(ExecutorType.BATCH);
+		for(RmMessageVo vo : vos) {
+			session.insert(namespace("insert"), vo);
+		}
+		session.flushStatements();
+		return ids;
     }
     
     /**
@@ -42,7 +56,7 @@ public class RmMessageDao extends RmSqlSessionDaoSupport implements IRmMessageCo
      * @return 成功删除的记录数
      */
     public int delete(String id) {
-    	return 0;
+    	return getSqlSession().delete(namespace("delete"), id);
     }
 
     /**
@@ -51,18 +65,8 @@ public class RmMessageDao extends RmSqlSessionDaoSupport implements IRmMessageCo
      * @param id 用于删除的记录的id
      * @return 成功删除的记录数
      */
-    public int delete(String id[]) {
-    	return 0;
-    }
-
-    /**
-     * 根据Id进行查询
-     * 
-     * @param id 用于查找的id
-     * @return 查询到的VO对象
-     */
-    public RmMessageVo find(String id) {
-    	return null;
+    public int delete(String ids[]) {
+    	return getSqlSession().delete(namespace("delete"), ids);
     }
 
     /**
@@ -72,7 +76,7 @@ public class RmMessageDao extends RmSqlSessionDaoSupport implements IRmMessageCo
      * @return 成功更新的记录数
      */
     public int update(RmMessageVo vo) {
-    	return 0;
+    	return getSqlSession().update(namespace("update"), vo);
     }
 
     /**
@@ -82,21 +86,38 @@ public class RmMessageDao extends RmSqlSessionDaoSupport implements IRmMessageCo
      * @return 成功更新的记录数组
      */
 	public int[] update(RmMessageVo[] vos) {
-		return null;
+		int[] result = new int[vos.length];
+		SqlSession session = getSqlSessionTemplate().getSqlSessionFactory().openSession(ExecutorType.BATCH);
+		int index = 0;
+		for(RmMessageVo vo : vos) {
+			result[index++] = session.update(namespace("update"), vo);
+		}
+		session.flushStatements();
+		return result;
 	}
 
+    /**
+     * 根据Id进行查询
+     * 
+     * @param id 用于查找的id
+     * @return 查询到的VO对象
+     */
+    public RmMessageVo get(String id) {
+    	return getSqlSession().selectOne(namespace("get"), id);
+    }
+    
     /**
      * 查询总记录数，带查询条件
      * 
      * @param queryCondition 查询条件
      * @return 总记录数
      */
-    public int getRecordCount(String queryCondition) {
-    	return 0;
+    public int getCount(String queryCondition) {
+    	return getSqlSession().selectOne(namespace("getCount"), queryCondition);
     }
     
     /**
-     * 功能: 通过查询条件获得所有的VO对象列表，带翻页，带排序字符
+     * 功能: 通过组合后的查询条件获得所有的VO对象列表，带翻页，带排序字符
      *
      * @param queryCondition 查询条件, queryCondition等于null或""时查询全部
      * @param orderStr 排序字符
@@ -106,11 +127,21 @@ public class RmMessageDao extends RmSqlSessionDaoSupport implements IRmMessageCo
      * @return 查询到的VO列表
      */
     public List<RmMessageVo> list(String queryCondition, String orderStr, int startIndex, int size, boolean allClumn) {
-		return getSqlSession().selectList("org.quickbundle.modules.message.dao.RmMessageDao.list", queryCondition, new RowBounds(startIndex-1, size));
+		return getSqlSession().selectList(namespace(allClumn ? "listAllColumn" : "list"), new ParaMap(queryCondition, orderStr), new RowBounds(startIndex-1, size));
 	}
     
-    public static void main(String[] args) {
-    	RmWebTestCase.init();
-    	RmBeanFactory.getBeanFactory().getBean(org.quickbundle.modules.message.dao.RmMessageDao.class).list("", null, 1, 5, true);
-	}
+    /**
+     * 功能: 传入查询参数Map，获得所有的VO对象列表，带翻页，带排序字符
+     * 
+     * @param searchPara
+     * @param orderStr 排序字符
+     * @param startIndex 开始位置(第一条是1，第二条是2...)
+     * @param size 查询多少条记录(size小于等于0时,忽略翻页查询全部)
+     * @return
+     */
+    public List<RmMessageVo> search(Map<String, Object> searchPara, String orderStr, int startIndex, int size) {
+    	searchPara.put("orderStr", orderStr);
+    	escapeSqlValue(searchPara, new String[]{"biz_keyword"});
+    	return getSqlSession().selectList(namespace("search"), searchPara, new RowBounds(startIndex-1, size));
+    }
 }

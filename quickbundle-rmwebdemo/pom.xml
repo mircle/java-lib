@@ -131,6 +131,7 @@
 					<encoding>UTF-8</encoding>
 					<warSourceDirectory>{war.dir}</warSourceDirectory>
 					<includeEmptyDirs>true</includeEmptyDirs>
+					<webXml>${war.dir}/WEB-INF/web.xml</webXml>
 				</configuration>
 			</plugin>
 			<plugin>

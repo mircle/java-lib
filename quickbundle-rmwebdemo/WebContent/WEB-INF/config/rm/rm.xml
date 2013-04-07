@@ -5,6 +5,8 @@
 		<warHome>/qb_home/rmdemo</warHome>
 		<!-- RmIdFactory generate primary key from database? or from memory cache? #change in production -->
 		<generateIdFromDb>true</generateIdFromDb>
+		<!-- RmIdFactory init id batch, union all? -->
+		<initIdBatch>false</initIdBatch>
 		<!-- is cluster mode? or single node? (online user, etc...) #change in production -->
 		<clusterMode>true</clusterMode>
 		<!-- default page size of list page-->

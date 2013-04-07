@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-//Spring Bean的标识.
+//Spring Bean的标识
 @Component
 
-// 默认将类中的所有public函数纳入事务管理.
+//默认将类中的所有public函数纳入事务管理
 @Transactional(readOnly = true)
 public class RmMessageService implements IRmMessageConstants {
 
@@ -74,9 +74,8 @@ public class RmMessageService implements IRmMessageConstants {
      * @param id 用于查找的id
      * @return 查询到的VO对象
      */
-    public RmMessageVo find(String id) {
-		RmMessageVo vo = dao.find(id);
-        //RmLogHelper.log(TABLE_LOG_TYPE_NAME, "察看了1条记录,id=" + id);
+    public RmMessageVo get(String id) {
+		RmMessageVo vo = dao.get(id);
 		return vo;
     }
 
@@ -140,9 +139,8 @@ public class RmMessageService implements IRmMessageConstants {
      * @param queryCondition 查询条件
      * @return 总记录数
      */
-    public int getRecordCount(String queryCondition) {
-		int sum = dao.getRecordCount(queryCondition);
-		//RmLogHelper.log(TABLE_LOG_TYPE_NAME, "查询到了总记录数,count=" + sum + ", queryCondition=" + queryCondition);
+    public int getCount(String queryCondition) {
+		int sum = dao.getCount(queryCondition);
 		return sum;
     }
 

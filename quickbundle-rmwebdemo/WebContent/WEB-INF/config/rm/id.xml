@@ -46,4 +46,8 @@
 	<table table_code="2003" table_name="RM_AFFIX" id_name="ID"/>
 	<table table_code="2002" table_name="RM_CODE_DATA" id_name="ID"/>
 	<table table_code="2001" table_name="RM_CODE_TYPE" id_name="ID"/>
+	
+	
+	
+	<table table_code="3001" table_name="RM_MESSAGE" id_name="ID"/>
 </RmIdFactory>

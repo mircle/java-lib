@@ -42,7 +42,19 @@ public class RmConfigVo {
 	 * 是否RmIdFactory每次从数据库中读取，生成id (用于多人clusterIdPrefix相同，而且要同时开发)
 	 */
 	private boolean generateIdFromDb = false;
+	
+	/**
+	 * RmIdFactory init id batch, union all?
+	 */
+	private boolean initIdBatch = false;
 
+	public boolean isInitIdBatch() {
+		return initIdBatch;
+	}
+
+	public void setInitIdBatch(boolean initIdBatch) {
+		this.initIdBatch = initIdBatch;
+	}
 
 	/**
 	 * 系统用户是否唯一登录，同时登录会强制踢出第一个用户

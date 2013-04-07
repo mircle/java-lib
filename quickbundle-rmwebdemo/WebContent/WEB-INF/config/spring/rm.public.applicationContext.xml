@@ -23,8 +23,8 @@
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 		<property name="locations">
 			<list>
-				<value>${rmdemo.root}/WEB-INF/config/mail/mail.properties</value>
-				<value>${rmdemo.root}/WEB-INF/config/jdbc/jdbc.properties</value>
+				<value>classpath:config/mail.properties</value>
+				<value>classpath:config/jdbc.properties</value>
 			</list>
 		</property>
 	</bean>
