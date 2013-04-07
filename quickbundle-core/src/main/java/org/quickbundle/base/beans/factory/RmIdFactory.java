@@ -1,5 +1,6 @@
 package org.quickbundle.base.beans.factory;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,6 +45,14 @@ public class RmIdFactory implements IRmIdFactory{
 	//开发模式下每次都查表获得最新ID，表名tableName --> {sql, tablePrefix}
 	private Map<String, String[]> mTableName_sql = null;
 
+	private File getIdXml() {
+		File idXml = new File(RmPathHelper.getWebInfDir() + "/config/rm/id.xml");
+		if(!idXml.exists()) {
+			idXml = new File(RmPathHelper.getWebInfDir() + "/config/jdbc/id.xml");
+		}
+		return idXml;
+	}
+	
     @Transactional(propagation=Propagation.NOT_SUPPORTED)
     public void initBeanFactory() {
         try {
@@ -56,7 +65,7 @@ public class RmIdFactory implements IRmIdFactory{
             Map<String, String> defaultNameSpaceMap = new HashMap<String, String>();  
             defaultNameSpaceMap.put("q", "http://www.quickbundle.org/schema");
             //读入id.xml
-            Document docId_xml = RmXmlHelper.parse(RmXmlHelper.formatToFile(RmPathHelper.getWebInfDir() + "/config/jdbc/id.xml"), defaultNameSpaceMap);
+            Document docId_xml = RmXmlHelper.parse(getIdXml().toString(), defaultNameSpaceMap);
             List<Element> lTable = docId_xml.selectNodes("/q:RmIdFactory/q:table");
             for(Element eleTable : lTable) {
             	String tableName = eleTable.valueOf("@table_name").toUpperCase();
@@ -67,7 +76,7 @@ public class RmIdFactory implements IRmIdFactory{
             if(RmConfig.isGenerateIdFromDb()) {
             	this.mTableName_sql = new HashMap<String, String[]>();
             }
-            if(RmConfig.systemDebugMode()) { //调试模式下批量查询maxId
+            if(RmConfig.getSingleton().isInitIdBatch()) { //Batch模式下批量查询maxId
             	doInitIdBatch(mTableName_Ele);
             } else {
             	doInitId(mTableName_Ele);

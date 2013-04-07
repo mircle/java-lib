@@ -14,6 +14,7 @@
 		<struts.version>1.3.10</struts.version>
 		<basedir>./</basedir>
 	</properties>
+	
 	<licenses>
 		<license>
 			<name>Apache 2</name>
@@ -35,6 +36,7 @@
 		<developerConnection>scm:git:https://github.com/quickbundle/java-web.git</developerConnection>
 		<url>https://github.com/quickbundle/java-web/tree/master/quickbundle-core</url>
 	</scm>
+	
 	<build>
 		<plugins>
 			<plugin>
