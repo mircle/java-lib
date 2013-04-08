@@ -1,20 +1,16 @@
 package org.quickbundle.third.struts.actions;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.quickbundle.ICoreConstants;
-import org.quickbundle.tools.helper.RmJspHelper;
 import org.quickbundle.tools.helper.RmStringHelper;
-import org.quickbundle.tools.helper.RmVoHelper;
 import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 public class RmDispatchAction extends DispatchAction {
 	static Logger log = RmLogHelper.getLogger("struts");
