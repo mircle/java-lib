@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page errorPage="/jsp/common/error/err.jsp" %>
 <%@page import="org.quickbundle.tools.support.buffer.FlushQueueThread"%>
-<%@page import="org.quickbundle.tools.support.buffer.CommonBuffer"%>
+<%@page import="org.quickbundle.tools.support.buffer.AbstractTaskQueue"%>
 <%@page import="java.util.concurrent.CopyOnWriteArrayList"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 	String info = "";
 	String bufClassName = request.getParameter("bufClassName");
 	String bufName = request.getParameter("bufName");
-	CopyOnWriteArrayList<CommonBuffer> bufs = FlushQueueThread.getSingleton().getBufs();
-	for(CommonBuffer buf : bufs) {
+	CopyOnWriteArrayList<AbstractTaskQueue> bufs = FlushQueueThread.getSingleton().getBufs();
+	for(AbstractTaskQueue buf : bufs) {
 		if(buf.getClass().getCanonicalName().equals(bufClassName) && buf.getName().equals(bufName)) {
-			buf.tryFlush();
-			info = "刷新成功!";
+	buf.tryFlush();
+	info = "刷新成功!";
 		}
 	}
 %>

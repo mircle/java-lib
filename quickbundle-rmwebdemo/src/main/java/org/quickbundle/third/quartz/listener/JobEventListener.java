@@ -25,7 +25,7 @@ public class JobEventListener implements JobListener {
 	/**
 	 * 缓冲区
 	 */
-	static EventBuffer eventBuf = new EventBuffer("作业事件");
+	static EventLog2DbService eventBuf = new EventLog2DbService("作业事件");
 
 	public String getName() {
 		return this.getClass().getSimpleName();

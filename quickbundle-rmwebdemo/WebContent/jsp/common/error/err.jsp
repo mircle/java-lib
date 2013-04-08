@@ -1,10 +1,10 @@
-﻿<%@page contentType="text/html; charset=UTF-8" language="java"%>
+<%@page contentType="text/html; charset=UTF-8" language="java"%>
 <%@ page isErrorPage="true" %>
 <%@page import="java.util.Iterator"%>
 <%@page import="org.apache.struts.action.ActionMessages"%>
 <%@page import="org.quickbundle.tools.helper.RmStringHelper"%>
 <%@page import="org.quickbundle.base.exception.RmExceptionVo"%>
-<%@page import="org.quickbundle.tools.support.office.excel.RmExcelHandler"%>
+<%@page import="org.quickbundle.third.excel.RmExcelHandler"%>
 <%@page import="org.quickbundle.third.struts.action.RmExceptionHandler"%>
 <%@page import="org.quickbundle.project.RmProjectHelper"%>
 <%@page import="org.quickbundle.project.init.RmConfig"%>

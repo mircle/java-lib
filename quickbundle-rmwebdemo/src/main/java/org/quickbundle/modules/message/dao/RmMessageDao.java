@@ -12,8 +12,9 @@ import org.quickbundle.modules.message.vo.RmMessageVo;
 import org.quickbundle.third.mybatis.ParaMap;
 import org.quickbundle.third.mybatis.RmSqlSessionDaoSupport;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class RmMessageDao extends RmSqlSessionDaoSupport implements IRmMessageConstants {
 
     /**

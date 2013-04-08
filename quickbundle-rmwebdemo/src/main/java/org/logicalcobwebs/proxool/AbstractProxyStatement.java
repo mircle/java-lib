@@ -18,11 +18,10 @@ import java.util.TreeMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.Logger;
-import org.apache.log4j.NDC;
 import org.quickbundle.project.listener.RmGlobalMonitor;
 import org.quickbundle.project.listener.RmRequestMonitor;
 import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 /**
  * Contains most of the functionality that we require to manipilate the

@@ -58,5 +58,5 @@ public interface IRmMessageConstants extends IGlobalConstants {
     }};
     
     //日志类型名称
-    public final static String TABLE_LOG_TYPE_NAME = TABLE_NAME_DISPLAY + "管理";
+    public final static String LOG_TYPE_NAME = TABLE_NAME_DISPLAY + "管理";
 }

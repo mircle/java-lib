@@ -47,7 +47,7 @@
 			<url>^/services(|/.*)$</url>
 		</ignoreUrls>
 		<!-- valid business service url, to be monitor and log -->
-		<validBsUrlMatch>^.*((\.(jsp|do|py))|/)$</validBsUrlMatch>
+		<validBsUrlMatch>^.*((\.(jsp|do|py))|/[\w]*)$</validBsUrlMatch>
 	</org.quickbundle.project.filter.RmPrivilegeFilter>
 	
 	<org.quickbundle.project.RmProjectHelper>

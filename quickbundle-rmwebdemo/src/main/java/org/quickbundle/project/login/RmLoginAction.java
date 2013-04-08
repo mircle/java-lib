@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -20,6 +19,7 @@ import org.quickbundle.third.struts.actions.RmDispatchAction;
 import org.quickbundle.tools.helper.RmDateHelper;
 import org.quickbundle.tools.helper.RmJspHelper;
 import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 public class RmLoginAction extends RmDispatchAction implements IRmLoginConstants {
 	private static final Logger logLogin = RmLogHelper.getLogger("rmlogin");

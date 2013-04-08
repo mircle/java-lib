@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="quickbundle-rmwebdemo" default="build" basedir="../../../../">
-	<property name="war.dir" value="rmdemo" />
+	<property name="war.name" value="rmdemo" />
+	<property name="war.dir" value="WebContent" />
 	<property name="build.dir" value="${war.dir}/WEB-INF/classes" />
 
 	<path id="master-classpath">
@@ -26,7 +27,6 @@
 	<target name="build" description="Compile main source tree java files">
 		<javac destdir="${build.dir}" debug="on" classpathref="master-classpath">
 			<src path="src/main/java" />
-			<src path="src/third/java" />
 			<src path="src/test/java" />
 			<include name="**/*.java" />
 			<compilerarg value="-Xlint" />
@@ -37,9 +37,6 @@
 			</fileset>
 			<fileset dir="src/main/resources">
 			</fileset>
-			<fileset dir="src/third/java">
-				<exclude name="**/*.java" />
-			</fileset>
 			<fileset dir="src/test/java">
 				<exclude name="**/*.java" />
 			</fileset>
@@ -47,7 +44,7 @@
 	</target>
 
 	<target name="war" depends="build">
-		<war warfile="${war.dir}.war" webxml="${war.dir}/WEB-INF/web.xml">
+		<war warfile="${war.name}.war" webxml="${war.dir}/WEB-INF/web.xml">
 			<fileset dir="${war.dir}">
 			</fileset>
 		</war>

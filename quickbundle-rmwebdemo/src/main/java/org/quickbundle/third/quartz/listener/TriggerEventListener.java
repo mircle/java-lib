@@ -20,7 +20,7 @@ public class TriggerEventListener implements TriggerListener {
 	/**
 	 * 
 	 */
-	static EventBuffer eventBuf = new EventBuffer("触发器事件");
+	static EventLog2DbService eventBuf = new EventLog2DbService("触发器事件");
 	
 	private RmSchedulerEventVo buildEventVo(Trigger trigger) {
 		RmSchedulerEventVo vo = new RmSchedulerEventVo();

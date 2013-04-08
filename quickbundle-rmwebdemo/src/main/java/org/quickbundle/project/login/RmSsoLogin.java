@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-import org.apache.log4j.Logger;
 import org.dom4j.Element;
 import org.quickbundle.base.cloud.RmClusterConfig;
 import org.quickbundle.base.exception.RmRuntimeException;
@@ -22,6 +21,7 @@ import org.quickbundle.tools.helper.RmStringHelper;
 import org.quickbundle.tools.helper.RmUUIDHelper;
 import org.quickbundle.tools.support.encrypt.Md5Token;
 import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 public class RmSsoLogin {
 	private static final Logger log = RmLogHelper.getLogger(RmSsoLogin.class);

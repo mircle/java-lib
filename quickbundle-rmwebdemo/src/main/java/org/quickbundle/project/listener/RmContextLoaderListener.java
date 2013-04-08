@@ -7,16 +7,15 @@ import java.util.Enumeration;
 
 import javax.servlet.ServletContextEvent;
 
-import org.apache.log4j.Logger;
 import org.logicalcobwebs.proxool.ProxoolFacade;
 import org.quickbundle.base.beans.factory.RmBeanFactory;
 import org.quickbundle.base.cache.RmCacheHandler;
 import org.quickbundle.base.web.servlet.RmHolderServlet;
-import org.quickbundle.project.RmProjectHelper;
 import org.quickbundle.project.init.RmWebApplicationInit;
 import org.quickbundle.tools.support.buffer.FlushQueueThread;
 import org.quickbundle.tools.support.log.RmLogHelper;
 import org.quickbundle.tools.support.path.RmPathHelper;
+import org.slf4j.Logger;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -56,7 +55,7 @@ public class RmContextLoaderListener extends ContextLoaderListener {
 			org.quartz.Scheduler scheduler = org.quartz.impl.StdSchedulerFactory.getDefaultScheduler();
 			scheduler.shutdown(true);
 			//等待quartz线程安全停止
-			doWaitForClearThread(10000, "org\\.quartz\\.simpl\\.SimpleThreadPool.*");
+			//doWaitForClearThread(10000, "org\\.quartz\\.simpl\\.SimpleThreadPool.*");
 		} catch (Exception e) {
 			log.error("scheduler.shutdown():" + e.toString());
 		}
@@ -65,7 +64,7 @@ public class RmContextLoaderListener extends ContextLoaderListener {
 		try {
 			FlushQueueThread.getSingleton().shutdown();
 			//等待RM-FlushQueue线程安全停止
-			doWaitForClearThread(10000, "RM-FlushQueue.*");
+			//doWaitForClearThread(10000, "RM-FlushQueue.*");
 		} catch (Exception e) {
 			log.error("FlushQueueThread.getSingleton().shutdown():" + e.toString());
 		}
@@ -73,7 +72,7 @@ public class RmContextLoaderListener extends ContextLoaderListener {
 		try {
 			RmCacheHandler.getSingleton().showdown();
 			//等待RM-CacheHandler线程安全停止
-			doWaitForClearThread(5000, "RM-CacheHandler.*");
+			//doWaitForClearThread(5000, "RM-CacheHandler.*");
 		} catch (Exception e) {
 			log.error("RmCacheHandler.getSingleton().showdown():" + e.toString());
 		}
@@ -81,12 +80,12 @@ public class RmContextLoaderListener extends ContextLoaderListener {
 		try {
 			ProxoolFacade.shutdown(10000);
 			//等待proxool连接池线程安全停止
-			doWaitForClearThread(10000, "org\\.logicalcobwebs\\.proxool\\.admin\\.StatsRoller.*");
+			//doWaitForClearThread(10000, "org\\.logicalcobwebs\\.proxool\\.admin\\.StatsRoller.*");
 		} catch (Exception e) {
 			log.error("ProxoolFacade.shutdown():" + e.toString());
 		}
 		
-		deregisterJdbcDriver();
+		//deregisterJdbcDriver();
 		super.contextDestroyed(event);
 		printThreads();
 	}

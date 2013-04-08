@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.dom4j.Document;
-import org.quartz.impl.StdSchedulerFactory;
 import org.quickbundle.base.beans.factory.RmBeanFactory;
 import org.quickbundle.base.beans.factory.RmIdFactory;
 import org.quickbundle.base.exception.RmRuntimeException;
@@ -284,14 +283,6 @@ public class RmWebApplicationInit implements ILoadOnStartup {
 		} catch (Exception e) {
 			RmLogHelper.error(RmWebApplicationInit.class, "setSchedulerStart(): " + e.toString());
 		}
-		
-		//quartz begin
-		try {
-			System.setProperty(StdSchedulerFactory.PROPERTIES_FILE, new File(RmPathHelper.getWarDir().getAbsolutePath() + "/WEB-INF/config/quartz/quartz.properties").toString());
-		} catch (Exception e) {
-			RmLogHelper.error(RmWebApplicationInit.class, "custom path: quartz.properties " + e.toString());
-		}
-		//quartz end
 	}
 
 	public void service(HttpServlet servlet, HttpServletRequest request, HttpServletResponse response) throws ServletException {

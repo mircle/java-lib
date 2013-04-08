@@ -2,19 +2,19 @@ package org.quickbundle.third.quartz.sample;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-
 import org.quickbundle.third.quartz.util.ISchedulerConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * @author liujia
  */
 public class CleanJob implements Job {
-	private final org.apache.log4j.Logger log=Logger.getLogger(getClass());
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	private static int cleanCount=0;
 	int test; 
 	public void execute(JobExecutionContext context)

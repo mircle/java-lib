@@ -4,11 +4,11 @@ import java.io.File;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.quickbundle.base.beans.factory.RmBeanFactory;
-import org.quickbundle.modules.log.Action2DbLogBuffer;
+import org.quickbundle.modules.log.ActionLog2DbService;
 import org.quickbundle.modules.log.ILogConstants;
 import org.quickbundle.modules.log.RmLogTypeCache;
 import org.quickbundle.modules.log.rmlog.vo.RmLogVo;
@@ -26,6 +26,9 @@ import org.quickbundle.tools.helper.RmJspHelper;
 import org.quickbundle.tools.helper.xml.RmXmlHelper;
 import org.quickbundle.tools.support.log.RmLogHelper;
 import org.quickbundle.tools.support.path.RmPathHelper;
+import org.slf4j.Logger;
+import org.slf4j.helpers.FormattingTuple;
+import org.slf4j.helpers.MessageFormatter;
 
 /**
  * 功能、用途、现存BUG:
@@ -106,11 +109,26 @@ public final class RmProjectHelper implements IGlobalConstants{
      * @return
      */
     public static String getRmLoginId(ServletRequest request) {
-    	if(RmJspHelper.getSession(request).getAttribute(RM_USER_VO) == null) {
+    	return getRmLoginId(request, false);
+    }
+    
+    /**
+     * 返回登录名，用于校验是否有效登录
+     * 
+     * @param request
+     * @param create
+     * @return
+     */
+    public static String getRmLoginId(ServletRequest request, boolean createSession) {
+    	HttpSession session = RmJspHelper.getSession(request, createSession);
+    	if(session == null) {
     		return null;
-    	} else {
-        	return ((IRmLoginVo)RmJspHelper.getSession(request).getAttribute(RM_USER_VO)).getLogin_id();
     	}
+    	Object obj = session.getAttribute(RM_USER_VO);
+    	if(obj == null) {
+    		return null;
+    	}
+        return ((IRmLoginVo)obj).getLogin_id();
     }
     
     /**
@@ -120,9 +138,20 @@ public final class RmProjectHelper implements IGlobalConstants{
      * @return
      */
     public static String getRmUserId(ServletRequest request) {
-    	return getRmUserVo(request).getId();
+    	return getRmUserId(request, false);
     }
     
+    /**
+     * 返回user_id，用于vo自动打戳 
+     * 
+     * @param request
+     * @param createSession
+     * @return
+     */
+    public static String getRmUserId(ServletRequest request, boolean createSession) {
+    	return getRmUserVo(request, createSession).getId();
+    }
+
     /**
      * 获得用户信息
      * 
@@ -130,7 +159,18 @@ public final class RmProjectHelper implements IGlobalConstants{
      * @return
      */
     public static RmUserVo getRmUserVo(ServletRequest request) {
-        Object obj = RmJspHelper.getSession(request).getAttribute(RM_USER_VO);
+    	return getRmUserVo(request, false);
+    }
+    
+    /**
+     * 获得用户信息
+     * 
+     * @param request
+     * @param createSession
+     * @return
+     */
+    public static RmUserVo getRmUserVo(ServletRequest request, boolean createSession) {
+        Object obj = RmJspHelper.getSession(request, createSession).getAttribute(RM_USER_VO);
         if (obj == null) {
             return null;
         } else {
@@ -181,13 +221,21 @@ public final class RmProjectHelper implements IGlobalConstants{
 		return ip;
 	}
 
+	
     /**
      * 手动记录日志进入数据库，适用于记录重要的业务日志
      *
      * @param action_module 日志模块名
      * @param content 日志内容
      */
-    public static void log(String action_module, String content) {
+    public static void log(String action_module, String format, Object... arguments) {
+    	String message = null;
+    	if(arguments.length > 0) {
+    		FormattingTuple ft = MessageFormatter.arrayFormat(format, arguments);
+    		message = ft.getMessage();
+    	} else {
+    		message = format;
+    	}
     	//system businessLog begin
     	StackTraceElement[] sts = Thread.currentThread().getStackTrace();
     	String callMethodName = null;
@@ -230,7 +278,7 @@ public final class RmProjectHelper implements IGlobalConstants{
     			logVo.setAction_type(getActionType(callMethodName));
     		}
     		logVo.setAction_uuid(uuid);
-    		logVo.setContent(content);
+    		logVo.setContent(message);
     	}
     	insertDbLog(logVo);
     	//system businessLog end
@@ -246,8 +294,8 @@ public final class RmProjectHelper implements IGlobalConstants{
     		String[] subject_content = RmAlarmCollector.createInfo(msg, e);
     		String subject = subject_content[0];
     		String content = subject_content[1];
-    		logFatal.fatal(subject);
-    		logFatal.fatal(content);
+    		logFatal.error(subject);
+    		logFatal.error(content);
     		IRmMailService mailService = (IRmMailService)RmBeanFactory.getBean("IRmMailService");
     		mailService.send(RmProjectHelper.getRmDoc().valueOf("/rm/org.quickbundle.project.RmProjectHelper/logFatal/mailTo"), 
     				subject, content, null, null);
@@ -260,10 +308,6 @@ public final class RmProjectHelper implements IGlobalConstants{
     }
     
     //system businessLog begin
-    /**
-     * 业务日志处理
-     */
-    private static Action2DbLogBuffer dbLog = new Action2DbLogBuffer();
     /**
      * 自动判断操作类型
      * @param callMethodName
@@ -284,7 +328,7 @@ public final class RmProjectHelper implements IGlobalConstants{
 	 * @param logVo
 	 */
 	public static void insertDbLog(RmLogVo logVo) {
-		dbLog.add(logVo);
+		RmBeanFactory.getBeanFactory().getBean(ActionLog2DbService.class).add(logVo);
 	}
     //system businessLog end
 

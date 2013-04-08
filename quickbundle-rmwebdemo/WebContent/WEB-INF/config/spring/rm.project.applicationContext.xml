@@ -25,14 +25,17 @@
 	
 	<bean id="org.quickbundle.project.login.IRmSessionService" class="org.quickbundle.project.login.RmSessionService"/>
 
-	<!--开始 配置RmCommon通用方法的bean-->
+	<!--RmCommon通用方法的bean-->
 	<bean id="IRmCommonService" class="org.quickbundle.project.common.service.impl.RmCommonService">
 		<property name="dao" ref="IRmCommonDao"/>
 	</bean>
 	<bean id="IRmCommonDao" class="org.quickbundle.project.common.dao.impl.RmCommonDao">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
-	<!--结束 配置RmCommon的bean-->
+
+    <bean name="Action2DbService" scope="singleton" class="org.quickbundle.modules.log.ActionLog2DbService" 
+        factory-method="getInstance">
+    </bean>
 
 	<!-- 发邮件 -->	
 	<bean id="IRmMailService" class="org.quickbundle.project.mail.impl.RmMailService">

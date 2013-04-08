@@ -7,13 +7,13 @@ import java.util.Map;
 import org.quickbundle.modules.message.IRmMessageConstants;
 import org.quickbundle.modules.message.dao.RmMessageDao;
 import org.quickbundle.modules.message.vo.RmMessageVo;
+import org.quickbundle.project.RmProjectHelper;
+import org.quickbundle.tools.helper.RmStringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-//Spring Bean的标识
-@Component
-
+@Service
 //默认将类中的所有public函数纳入事务管理
 @Transactional(readOnly = true)
 public class RmMessageService implements IRmMessageConstants {
@@ -29,7 +29,7 @@ public class RmMessageService implements IRmMessageConstants {
      */
     public String insert(RmMessageVo vo) {
         String id = rmMessageDao.insert(vo);
-        //RmLogHelper.log(TABLE_LOG_TYPE_NAME, "插入了1条记录,id=" + String.valueOf(id));
+        RmProjectHelper.log(LOG_TYPE_NAME, "插入了1条记录,id={}", String.valueOf(id));
 		return id;
     }
     
@@ -41,7 +41,7 @@ public class RmMessageService implements IRmMessageConstants {
      */
     public String[] insert(RmMessageVo[] vos) {
         String[] aId = rmMessageDao.insert(vos);
-        //RmLogHelper.log(TABLE_LOG_TYPE_NAME, "插入了" + vos.length + "条记录,id=" + RmStringHelper.ArrayToString(aId, ","));
+        RmProjectHelper.log(LOG_TYPE_NAME, "插入了{}条记录,id={}", vos.length, RmStringHelper.arrayToString(aId, ","));
         return aId;
     }
 
@@ -53,7 +53,7 @@ public class RmMessageService implements IRmMessageConstants {
      */
     public int delete(String id) {
 		int sum = rmMessageDao.delete(id);
-		//RmLogHelper.log(TABLE_LOG_TYPE_NAME, "删除了" + sum + "条记录,id=" + String.valueOf(id));
+		RmProjectHelper.log(LOG_TYPE_NAME, "删除了{}条记录,id={}", sum, String.valueOf(id));
 		return sum;
     }
 
@@ -65,7 +65,7 @@ public class RmMessageService implements IRmMessageConstants {
      */
     public int delete(String ids[]) {
 		int sum = rmMessageDao.delete(ids);
-        //RmLogHelper.log(TABLE_LOG_TYPE_NAME, "删除了" + sum + "条记录,id=" + RmStringHelper.ArrayToString(ids, ","));
+        RmProjectHelper.log(LOG_TYPE_NAME, "删除了{}条记录,id={}", sum, RmStringHelper.arrayToString(ids, ","));
 		return sum;
     }
 
@@ -77,7 +77,7 @@ public class RmMessageService implements IRmMessageConstants {
      */
     public int update(RmMessageVo vo) {
 		int sum = rmMessageDao.update(vo);
-        //RmLogHelper.log(TABLE_LOG_TYPE_NAME, "更新了" + sum + "条记录,id=" + String.valueOf(vo.getId()));
+        RmProjectHelper.log(LOG_TYPE_NAME, "更新了{}条记录,id={}", sum, String.valueOf(vo.getId()));
 		return sum;
     }
 
@@ -93,7 +93,7 @@ public class RmMessageService implements IRmMessageConstants {
 		for (int i = 0; i < sum.length; i++) {
 			finalSum += sum[i];
 		}
-		//RmLogHelper.log(TABLE_LOG_TYPE_NAME, "批量更新了" + finalSum + "条记录);
+		RmProjectHelper.log(LOG_TYPE_NAME, "批量更新了{}条记录", finalSum);
 		return finalSum;
 	}
 	

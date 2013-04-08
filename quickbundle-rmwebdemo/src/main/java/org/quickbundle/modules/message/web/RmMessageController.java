@@ -92,6 +92,9 @@ public class RmMessageController implements IRmMessageConstants{
 	 */
 	@RequestMapping(value = "insert", method = RequestMethod.POST)
 	public String insert(HttpServletRequest request, @Valid RmMessageVo vo, RedirectAttributes redirectAttributes) {
+		if("".equals(vo.getParent_message_id())) {
+			vo.setParent_message_id(null);
+		}
         RmVoHelper.markCreateStamp(request,vo);  //打创建时间,IP戳
         rmMessageService.insert(vo);  //插入单条记录
         redirectAttributes.addFlashAttribute("message", "创建成功");
@@ -122,7 +125,10 @@ public class RmMessageController implements IRmMessageConstants{
 	 */
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String update(HttpServletRequest request, @Valid @ModelAttribute("preloadTask") RmMessageVo vo, RedirectAttributes redirectAttributes) {
-        RmVoHelper.markModifyStamp(request,vo);  //打修改时间,IP戳
+		if("".equals(vo.getParent_message_id())) {
+			vo.setParent_message_id(null);
+		}
+		RmVoHelper.markModifyStamp(request,vo);  //打修改时间,IP戳
         int count = rmMessageService.update(vo);  //更新单条记录
         redirectAttributes.addFlashAttribute("message", "更新成功: " + count);
     	return "redirect:/rmmessage/";

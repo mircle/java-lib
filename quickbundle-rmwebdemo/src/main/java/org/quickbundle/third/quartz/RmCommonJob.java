@@ -2,12 +2,12 @@ package org.quickbundle.third.quartz;
 
 import java.lang.reflect.Method;
 
-import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quickbundle.project.listener.RmAlarmCollector;
 import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 public class RmCommonJob implements Job  {
 	private static Logger log = RmLogHelper.getLogger(RmCommonJob.class);

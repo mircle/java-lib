@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.Node;
 import org.quickbundle.base.cloud.RmClusterConfig;
@@ -33,6 +32,7 @@ import org.quickbundle.project.login.RmUserVo;
 import org.quickbundle.tools.helper.RmJspHelper;
 import org.quickbundle.tools.helper.RmUUIDHelper;
 import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 /**
  * @author   
@@ -112,7 +112,7 @@ public class RmPrivilegeFilter implements Filter {
     				fullUrl.append("?");
     				fullUrl.append(req.getQueryString());
     			}
-    			logUrl.debug(fullUrl);
+    			logUrl.debug(fullUrl.toString());
     		}
     		String shortUri = uri.substring(req.getContextPath().length());
     		if(uri.equals(request.getAttribute("javax.servlet.forward.request_uri"))) {
@@ -198,6 +198,7 @@ public class RmPrivilegeFilter implements Filter {
 						//记录线程绑定的sql日志
 						RmRequestMonitor.logTlSqlCount((HttpServletRequest)request);
 					} catch (Exception e) {
+						e.printStackTrace();
 						logError.error("logTlSqlCount request: " + e.toString());
 					}
 					try {

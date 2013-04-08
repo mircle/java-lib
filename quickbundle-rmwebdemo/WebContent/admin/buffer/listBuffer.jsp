@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page errorPage="/jsp/common/error/err.jsp" %>
 <%@page import="org.quickbundle.tools.helper.RmDateHelper"%>
-<%@page import="org.quickbundle.tools.support.buffer.CommonBuffer"%>
+<%@page import="org.quickbundle.tools.support.buffer.AbstractTaskQueue"%>
 <%@page import="java.util.concurrent.CopyOnWriteArrayList"%>
 <%@page import="org.quickbundle.tools.support.buffer.FlushQueueThread"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -26,8 +26,8 @@ function flushNow_onClick(bufClassName_, bufName_) {
 <div>
 	<div style="padding:0px 0px 10px 60px"><input type="button" value="刷新本页面" onclick="window.location.reload();"/></div>
 <%
-	CopyOnWriteArrayList<CommonBuffer> bufs = FlushQueueThread.getSingleton().getBufs();
-	for(CommonBuffer buf : bufs) {
+	CopyOnWriteArrayList<AbstractTaskQueue> bufs = FlushQueueThread.getSingleton().getBufs();
+	for(AbstractTaskQueue buf : bufs) {
 %>
 	<div style="padding:0px 0px 10px 10px">
 		<table border="1">

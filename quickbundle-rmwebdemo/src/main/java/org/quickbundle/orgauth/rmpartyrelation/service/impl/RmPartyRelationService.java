@@ -20,15 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.quickbundle.base.beans.factory.RmBeanFactory;
 import org.quickbundle.base.cache.RmSqlCountCache;
 import org.quickbundle.base.service.RmService;
-import org.quickbundle.project.RmProjectHelper;
-import org.quickbundle.project.common.vo.RmCommonVo;
-import org.quickbundle.tools.helper.RmStringHelper;
-import org.quickbundle.tools.support.log.RmLogHelper;
-
 import org.quickbundle.orgauth.cache.RmPartyTypeRelationRuleCache;
 import org.quickbundle.orgauth.cache.RmPartyViewCache;
 import org.quickbundle.orgauth.rmpartyrelation.dao.IRmPartyRelationDao;
@@ -41,6 +35,11 @@ import org.quickbundle.orgauth.rmpartytyperelationrule.util.IRmPartyTypeRelation
 import org.quickbundle.orgauth.rmpartytyperelationrule.util.RmPartyTypeRelationRuleException;
 import org.quickbundle.orgauth.rmpartytyperelationrule.vo.RmPartyTypeRelationRuleVo;
 import org.quickbundle.orgauth.util.RmPartyRelationCode;
+import org.quickbundle.project.RmProjectHelper;
+import org.quickbundle.project.common.vo.RmCommonVo;
+import org.quickbundle.tools.helper.RmStringHelper;
+import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 /**
  * 功能、用途、现存BUG:
