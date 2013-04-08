@@ -5,11 +5,11 @@ import java.lang.reflect.InvocationTargetException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.quickbundle.project.init.RmConfig;
 import org.quickbundle.tools.helper.RmStringHelper;
 import org.quickbundle.tools.helper.RmUUIDHelper;
 import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 public class RmRequestMonitor {
 	
@@ -124,7 +124,7 @@ public class RmRequestMonitor {
     	Object loginId = null;
     	try {
     		clz = Class.forName("org.quickbundle.project.RmProjectHelper");
-    		loginId = clz.getMethod("getRmLoginId", ServletRequest.class).invoke(clz, new Object[]{request});
+    		loginId = clz.getMethod("getRmLoginId", ServletRequest.class, boolean.class).invoke(clz, new Object[]{request, false});
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		} catch (IllegalArgumentException e) {

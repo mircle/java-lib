@@ -84,7 +84,7 @@ public class RmIdFactory implements IRmIdFactory{
             RmLogHelper.getLogger(this.getClass()).info("init " + mTableName_Ele.size() + " tables, cost " + (System.currentTimeMillis()-startTime) + " milliseconds!");
         } catch (Exception e) {
             e.printStackTrace();
-            RmLogHelper.getLogger(RmIdFactory.class).fatal("id.xml初始化失败:" + e.toString());
+            RmLogHelper.getLogger(RmIdFactory.class).error("id.xml初始化失败:" + e.toString());
         }
     }
     

@@ -5,10 +5,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RmReflectHelper {
-	private static Logger log = Logger.getLogger(RmReflectHelper.class);
+	private static Logger log = LoggerFactory.getLogger(RmReflectHelper.class);
 
 	private static Object operate(Object obj, String fieldName, Object fieldVal, String type) {
 		Object ret = null;

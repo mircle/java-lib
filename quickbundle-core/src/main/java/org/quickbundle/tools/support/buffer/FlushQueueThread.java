@@ -58,13 +58,13 @@ public class FlushQueueThread extends Thread {
 	/**
 	 * 检查的缓冲器集合 为保证高效迭代查询,使用CopyOnWrite结构
 	 */
-	private CopyOnWriteArrayList<CommonBuffer> bufs = new CopyOnWriteArrayList<CommonBuffer>();
+	private CopyOnWriteArrayList<AbstractTaskQueue> bufs = new CopyOnWriteArrayList<AbstractTaskQueue>();
 	
 	/**
 	 * 获得缓冲器列表
 	 * @return the bufs
 	 */
-	public CopyOnWriteArrayList<CommonBuffer> getBufs() {
+	public CopyOnWriteArrayList<AbstractTaskQueue> getBufs() {
 		return bufs;
 	}
 
@@ -83,7 +83,7 @@ public class FlushQueueThread extends Thread {
 	 */
 	private long flush_interval = RmConfig.cacheCheckInterval();
 
-	public void addCommonBuffer(CommonBuffer buf) {
+	public void addTaskQueue(AbstractTaskQueue buf) {
 		if (buf == null) {
 			return;
 		}
@@ -96,9 +96,9 @@ public class FlushQueueThread extends Thread {
 	 */
 	private void commitFlushTasks(final boolean forceFlush){
 		//检查刷新全部缓冲器
-		Iterator<CommonBuffer> it = bufs.iterator();
+		Iterator<AbstractTaskQueue> it = bufs.iterator();
 		while (it.hasNext()) {
-			final CommonBuffer buf = it.next();
+			final AbstractTaskQueue buf = it.next();
 			Runnable task = new Runnable() {
 				public void run() {
 					if(forceFlush) {

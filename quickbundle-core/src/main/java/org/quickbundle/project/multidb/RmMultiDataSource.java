@@ -43,7 +43,7 @@ public class RmMultiDataSource {
                             	RmLogHelper.getLogger(this.getClass()).info("registerBeanDefinition:" + aChannelKey[i] + "-->" + bd_dataSourceChannel);
             				}
                         } else {
-                        	RmLogHelper.getLogger(RmMultiDataSource.class).fatal("RmBeanFactory.getBeanFactory() instanceof BeanDefinition = false");
+                        	RmLogHelper.getLogger(RmMultiDataSource.class).error("RmBeanFactory.getBeanFactory() instanceof BeanDefinition = false");
                         	throw new RmRuntimeException("RmBeanFactory.getBeanFactory() instanceof BeanDefinitionRegistry = false");
                         }
                         isInitCreateBean = true;

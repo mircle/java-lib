@@ -3,13 +3,13 @@ package org.quickbundle.base.beans.factory;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.quickbundle.base.web.servlet.RmHolderServlet;
 import org.quickbundle.project.init.RmConfig;
 import org.quickbundle.tools.helper.RmStringHelper;
 import org.quickbundle.tools.helper.xml.RmXmlHelper;
 import org.quickbundle.tools.support.log.RmLogHelper;
 import org.quickbundle.tools.support.path.RmPathHelper;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 

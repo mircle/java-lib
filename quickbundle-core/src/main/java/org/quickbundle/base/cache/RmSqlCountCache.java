@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.log4j.Logger;
 import org.quickbundle.itf.cache.IRmCacheListener;
 import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 public class RmSqlCountCache implements IRmCacheListener {
 	

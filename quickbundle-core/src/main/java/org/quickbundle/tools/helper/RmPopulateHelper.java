@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.apache.log4j.Logger;
 import org.quickbundle.ICoreConstants;
 import org.quickbundle.base.vo.RmValueObject;
 import org.quickbundle.itf.IPopulateParser;
@@ -36,6 +35,7 @@ import org.quickbundle.project.tools.RmJsonConfig;
 import org.quickbundle.project.tools.RmPopulateParser;
 import org.quickbundle.tools.support.log.RmLogHelper;
 import org.quickbundle.util.RmSequenceMap;
+import org.slf4j.Logger;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.NotWritablePropertyException;

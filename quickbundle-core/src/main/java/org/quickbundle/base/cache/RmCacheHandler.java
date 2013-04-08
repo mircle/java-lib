@@ -11,10 +11,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.jws.WebService;
 
-import org.apache.log4j.Logger;
 import org.quickbundle.itf.cache.IRmCacheHandler;
 import org.quickbundle.itf.cache.IRmCacheListener;
 import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 @WebService(endpointInterface = "org.quickbundle.itf.cache.IRmCacheHandler")
 public class RmCacheHandler<T> implements IRmCacheHandler<T>{

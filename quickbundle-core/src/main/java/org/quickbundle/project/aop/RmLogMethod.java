@@ -17,7 +17,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -25,6 +24,7 @@ import org.quickbundle.project.init.RmConfig;
 import org.quickbundle.project.listener.RmGlobalMonitor;
 import org.quickbundle.tools.helper.RmUUIDHelper;
 import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 public class RmLogMethod {
 	private static final Logger logMethod = RmLogHelper.getLogger("rmmethod");

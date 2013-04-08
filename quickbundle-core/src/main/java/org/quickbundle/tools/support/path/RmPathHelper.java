@@ -264,8 +264,8 @@ public class RmPathHelper {
 		System.out.println("RmPathHelper.getProjectDir()=" + RmPathHelper.getProjectDir());
 		System.out.println("RmPathHelper.getProjectName()=" + RmPathHelper.getProjectName());
 		try {
-			RmLogHelper.getLogger(RmPathHelper.class).info(ClassLoader.getSystemResource(""));
-			RmLogHelper.getLogger(RmPathHelper.class).info(getWebInfDir());
+			RmLogHelper.getLogger(RmPathHelper.class).info(String.valueOf(ClassLoader.getSystemResource("")));
+			RmLogHelper.getLogger(RmPathHelper.class).info(String.valueOf(getWebInfDir()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

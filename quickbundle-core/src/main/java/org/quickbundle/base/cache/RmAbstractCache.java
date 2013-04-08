@@ -2,9 +2,9 @@ package org.quickbundle.base.cache;
 
 import java.util.Arrays;
 
-import org.apache.log4j.Logger;
 import org.quickbundle.itf.cache.IRmCacheListener;
 import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 public abstract class RmAbstractCache implements IRmCacheListener{
     protected volatile boolean isInit = false;

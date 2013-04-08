@@ -6,9 +6,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.apache.log4j.Logger;
 import org.quickbundle.project.init.RmConfig;
 import org.quickbundle.tools.support.log.RmLogHelper;
+import org.slf4j.Logger;
 
 /**
  * 通用缓冲器 <h3>刷新方式:</h3>
@@ -23,7 +23,7 @@ import org.quickbundle.tools.support.log.RmLogHelper;
  * @since 2010-10-14
  * @param <E> 缓冲对象
  */
-public abstract class CommonBuffer<E> {
+public abstract class AbstractTaskQueue<E> {
 	protected Logger log = RmLogHelper.getLogger(this.getClass());
 	/**
 	 * 缓冲队列
@@ -54,9 +54,9 @@ public abstract class CommonBuffer<E> {
 	/**
 	 * 构造函数
 	 */
-	public CommonBuffer() {
+	public AbstractTaskQueue() {
 		//绑定到刷新器
-		FlushQueueThread.getSingleton().addCommonBuffer(this);
+		FlushQueueThread.getSingleton().addTaskQueue(this);
 	}
 	
 	/**
@@ -78,7 +78,7 @@ public abstract class CommonBuffer<E> {
 		
 		if(buf.size() >= capcity * 10){
 			//容量过大
-			RmLogHelper.getLogger("rmexception").fatal("buf.clear() -> count:" + buf.size() + ", 缓冲区溢出, 请联系维护人员检查是否部署环境异常!");
+			RmLogHelper.getLogger("rmexception").error("buf.clear() -> count:" + buf.size() + ", 缓冲区溢出, 请联系维护人员检查是否部署环境异常!");
 			buf.clear();
 		}
 		//注释掉以下代码，杜绝在发起调用的业务线程中更新日志
@@ -195,20 +195,4 @@ public abstract class CommonBuffer<E> {
 		expire_time = expireTime;
 	}
 
-}
-
-/***********测试类*************/
-class SysOutBuffer extends CommonBuffer<String> {
-	public SysOutBuffer() {
-		super();
-		expire_interval = 5000;
-	}
-
-	@Override
-	protected void flush(Queue<String> buf) {
-		System.out.print("\nFlushing...\n");
-		while(!buf.isEmpty()) {
-			System.out.println("SysOutBuffer:" + buf.poll());
-		}
-	}
 }

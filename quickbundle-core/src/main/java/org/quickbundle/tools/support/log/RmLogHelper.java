@@ -11,7 +11,8 @@
  */
 package org.quickbundle.tools.support.log;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 日志工具类
@@ -22,31 +23,31 @@ import org.apache.log4j.Logger;
  * @since 1.0.0
  */
 public class RmLogHelper {
-    public static Logger getLogger(String className) {
-        return Logger.getLogger(className);
-    }
-    
-    public static Logger getLogger(Class class_) {
-        return getLogger(class_.getName());
-    }
-    
+	public static Logger getLogger(String className) {
+		return LoggerFactory.getLogger(className);
+	}
+
+	public static Logger getLogger(Class class_) {
+		return getLogger(class_.getName());
+	}
+
+	public static void trace(Class class_, String str) {
+		getLogger(class_).trace(str);
+	}
+
 	public static void debug(Class class_, String str) {
 		getLogger(class_).debug(str);
 	}
-	
+
 	public static void info(Class class_, String str) {
 		getLogger(class_).info(str);
 	}
-	
+
 	public static void warn(Class class_, String str) {
 		getLogger(class_).warn(str);
 	}
-	
+
 	public static void error(Class class_, String str) {
 		getLogger(class_).error(str);
-	}
-	
-	public static void fatal(Class class_, String str) {
-		getLogger(class_).fatal(str);
 	}
 }
