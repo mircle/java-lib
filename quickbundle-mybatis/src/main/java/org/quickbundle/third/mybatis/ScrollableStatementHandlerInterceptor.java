@@ -3,8 +3,6 @@ package org.quickbundle.third.mybatis;
 import java.sql.Connection;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.plugin.Interceptor;
@@ -20,11 +18,13 @@ import org.quickbundle.third.mybatis.dialect.Dialect;
 import org.quickbundle.third.mybatis.dialect.H2Dialect;
 import org.quickbundle.third.mybatis.dialect.MySql5Dialect;
 import org.quickbundle.third.mybatis.dialect.OracleDialect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
-public class ScrollableInterceptor implements Interceptor {
+public class ScrollableStatementHandlerInterceptor implements Interceptor {
 
-	private final static Log log = LogFactory.getLog(ScrollableInterceptor.class);
+	private final static Logger log = LoggerFactory.getLogger(ScrollableStatementHandlerInterceptor.class);
 
 	public Object intercept(Invocation invocation) throws Throwable {
 		StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
