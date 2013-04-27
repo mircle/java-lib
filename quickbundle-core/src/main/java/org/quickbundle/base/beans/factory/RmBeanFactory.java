@@ -169,7 +169,7 @@ public class RmBeanFactory {
 	 * @throws BeanNotOfRequiredTypeException if the bean is not of the required type
 	 * @throws BeansException if the bean could not be created
 	 */
-	public <T> T getBean(String name, Class<T> requiredType) throws BeansException {
+	public static <T> T getBean(String name, Class<T> requiredType) throws BeansException {
     	BeanFactory bf = getBeanFactorySafe();
     	if(bf != null) {
     		return bf.getBean(name, requiredType);
@@ -191,7 +191,7 @@ public class RmBeanFactory {
 	 * @since 3.0
 	 * @see ListableBeanFactory
 	 */
-	<T> T getBean(Class<T> requiredType) throws BeansException {
+	public static <T> T getBean(Class<T> requiredType) throws BeansException {
     	BeanFactory bf = getBeanFactorySafe();
     	if(bf != null) {
     		return bf.getBean(requiredType);
@@ -213,7 +213,7 @@ public class RmBeanFactory {
 	 * @throws BeansException if the bean could not be created
 	 * @since 2.5
 	 */
-	Object getBean(String name, Object... args) throws BeansException {
+	public static Object getBean(String name, Object... args) throws BeansException {
     	BeanFactory bf = getBeanFactorySafe();
     	if(bf != null) {
     		return bf.getBean(name, args);
