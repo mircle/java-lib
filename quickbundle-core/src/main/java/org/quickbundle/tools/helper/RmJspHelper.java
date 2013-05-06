@@ -826,6 +826,9 @@ public class RmJspHelper implements ICoreConstants {
         if(tempStr != null && tempStr.length() > 0) {
         	reqArray = tempStr.split(",");
         }
+        if(reqArray == null) {
+        	reqArray = new String[0];
+        }
         for(String str : reqArray) {
         	if(str.length() > 0) {
         		result.add(str);
