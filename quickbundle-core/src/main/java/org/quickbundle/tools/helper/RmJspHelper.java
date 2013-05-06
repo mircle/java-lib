@@ -5,8 +5,9 @@ package org.quickbundle.tools.helper;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Enumeration;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -801,7 +802,7 @@ public class RmJspHelper implements ICoreConstants {
      */
     public static String getOrderStr(HttpServletRequest request) {
         StringBuilder orderStr = null;
-        String requestValue = getValueFromRequest_attributeParameter(request, RM_ORDER_STR);
+        String requestValue = RmJspHelper.getValueFromRequest_attributeParameter(request, RM_ORDER_STR);
         if(requestValue != null && requestValue.trim().length() > 0) {
             orderStr = new StringBuilder(requestValue);
         } else if(request.getParameter("sort") != null && request.getParameter("sort").trim().length() > 0){
@@ -812,128 +813,45 @@ public class RmJspHelper implements ICoreConstants {
     }
     
     /**
-     * 功能: 供自动排序使用
+     * 从 request 获取可能为多个值的数组表示, 所有的""会被忽略
      *
-     * @param orderStrName
-     * @param req
-     * @param sortAction
-     * @param sortParam
+     * @param request
+     * @param inputName
      * @return
      */
-    public static String getOrderURL(String orderStrName, HttpServletRequest req, String sortAction, String sortParam) {
-    	StringBuffer result = new StringBuffer();
-        StringBuffer url = null;
-        if (sortAction != null) {
-            url = new StringBuffer(req.getContextPath() + "/" + sortAction);
-        } else if(req.getAttribute(RM_ACTION_URI) != null) {
-            url = new StringBuffer(req.getAttribute(RM_ACTION_URI).toString());
-        } else {
-            url = new StringBuffer(req.getRequestURI());
+    public static String[] getArrayFromRequest(HttpServletRequest request, String inputName) {
+    	List<String> result = new ArrayList<String>();
+        String[] reqArray = null;
+        String tempStr = request.getParameter(inputName);
+        if(tempStr != null && tempStr.length() > 0) {
+        	reqArray = tempStr.split(",");
         }
-        StringBuffer sb = changeUrlForCmd(req, sortParam);
-        String OrderStr = getOrderStr(req);
-        if (OrderStr != null && OrderStr.length() > 0) { //升降序互换
-            int descpos = orderStrName.indexOf("DESC");
-            int ascpos = orderStrName.indexOf("ASC");
-            if (descpos > 0) {
-            	orderStrName = orderStrName.substring(0, descpos).trim();
-            }
-            if (ascpos > 0) {
-            	orderStrName = orderStrName.substring(0, ascpos).trim();
-            }
-            if (OrderStr.indexOf(orderStrName) >= 0) {
-                if (OrderStr.indexOf("DESC") > 0) {
-                    sb = repleaceOrderParam(sb, orderStrName, " ASC");
-                    result.append(url).append("?").append(sb);
-                } else {
-                    sb = repleaceOrderParam(sb, orderStrName, " DESC");
-                    result.append(url).append("?").append(sb);
-                }
-            } else {
-                sb = repleaceOrderParam(sb, orderStrName, "");
-                result.append(url).append("?").append(sb);
-            }
-        } else {
-            sb = sb.append("&" + RM_ORDER_STR + "=" + orderStrName);
-            result.append(url).append("?").append(sb);
-        }
-        try {
-			return result.toString().replaceFirst("\\?&", "?");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result.toString();
-    }
-    
-    private static StringBuffer changeUrlForCmd(HttpServletRequest req, String sortParam) {
-        StringBuffer url = new StringBuffer();
-        if (req.getQueryString() != null) {
-        	url = url.append(req.getQueryString());
-        }
-        StringBuffer paramsUrl = getUrlFromParameters(url, req);
-        if (paramsUrl != null && paramsUrl.length() > 0) {
-        	if(url.length() > 0) {
-        		url.append("&");
+        for(String str : reqArray) {
+        	if(str.length() > 0) {
+        		result.add(str);
         	}
-        	url.append(paramsUrl);
         }
-        String cmdStr = sortParam;
-        if (cmdStr != null) {
-            int pos_cmd = url.indexOf("cmd=");
-            if (pos_cmd > -1) {
-                String requestPathStr_end = url.substring(pos_cmd + 4);
-                String requestPathStr_start = url.substring(0, pos_cmd + 4);
-                int pos_cmd_1 = requestPathStr_end.indexOf('&');
-                if (pos_cmd_1 > -1) {
-                	url = new StringBuffer(requestPathStr_start + cmdStr + requestPathStr_end.substring(pos_cmd_1));
-                } else {
-                	url = new StringBuffer(requestPathStr_start + cmdStr);
-                }
-            } else if (url.indexOf("?") > -1) {
-            	url.append("&cmd=" + cmdStr);
-            } else {
-            	url.append("cmd=" + cmdStr);
-            }
-        }
-        return url;
+        return result.toArray(new String[0]);
     }
-
-    private static StringBuffer getUrlFromParameters(StringBuffer url, HttpServletRequest req) {
-        Enumeration enu = req.getParameterNames();
-        StringBuffer re = new StringBuffer();
-        while (enu.hasMoreElements()) {
-            String pstr = (String) enu.nextElement();
-            if (url.indexOf(pstr + "=") == -1) {
-                String value = req.getParameter(pstr);
-                value = RmStringHelper.encodeUrl(value);
-                re.append(pstr).append("=").append(value);
-                if (enu.hasMoreElements()) {
-                    re.append("&");                	
-                }
-            }
-        }
-        return re;
-    }
-
-    private static StringBuffer repleaceOrderParam(StringBuffer sb, String orderStrName, String sortSymbol) {
-        String sbstr = sb.toString();
-        if (sbstr.indexOf(RM_ORDER_STR) >= 0) {
-            int start = sbstr.indexOf(RM_ORDER_STR + "=");
-            int stop = sbstr.indexOf("&", start + 1);
-            if (stop == -1) {
-                stop = sb.length();            	
-            }
-            sb = sb.delete(start, stop);
-            sb = sb.insert(start, RM_ORDER_STR + "=" + orderStrName + sortSymbol);
-        } else {
-            sb = sb.append("&").append(RM_ORDER_STR).append("=").append(orderStrName).append(sortSymbol);
-        }
-        return sb;
-    }
-    
     
     /**
-     * 功能: 从 request 获取可能为多个值的数组表示，""也是有效的单个值，但""会返回0数组
+     * 从 request 获取可能为多个值的数组表示, 所有的""会被忽略
+     *
+     * @param request
+     * @param inputName
+     * @return
+     */
+    public static Long[] getLongArrayFromRequest(HttpServletRequest request, String inputName) {
+    	String[] strResult = getArrayFromRequest(request, inputName);
+    	Long[] result = new Long[strResult.length];
+    	for (int i = 0; i < strResult.length; i++) {
+    		result[i] = new Long(strResult[i]);
+		}
+    	return result;
+    }
+    
+    /**
+     * 功能: 从 request 获取可能为多个值的数组表示，""也是有效的单个值，null会返回0数组
      * 
      * @param request
      * @param inputName
@@ -944,44 +862,6 @@ public class RmJspHelper implements ICoreConstants {
         String tempStr = request.getParameter(inputName);
         if(tempStr != null && tempStr.length() > 0) {
             returnStrArray = tempStr.split(",", -1);
-        }
-        if(returnStrArray == null) {
-            returnStrArray = new String[0];
-        }
-        return returnStrArray;
-    }
-    
-    /**
-     * 从 request 获取可能为多个值的数组表示, ""不是有效单个值
-     *
-     * @param request
-     * @param inputName
-     * @return
-     */
-    public static String[] getArrayFromRequest(HttpServletRequest request, String inputName) {
-        String[] returnStrArray = null;
-        String tempStr = request.getParameter(inputName);
-        if(tempStr != null && tempStr.length() > 0) {
-            returnStrArray = tempStr.split(",");
-        }
-        if(returnStrArray == null) {
-            returnStrArray = new String[0];
-        }
-        return returnStrArray;
-    }
-    
-    /**
-     * 从 request 获取可能为多个值的数组表示
-     *
-     * @param request
-     * @param inputName
-     * @return
-     */
-    public static String[] getArrayWithNullFromRequest(HttpServletRequest request, String inputName) {
-        String[] returnStrArray = null;
-        String tempStr = request.getParameter(inputName);
-        if(tempStr != null && tempStr.length() > 0) {
-            returnStrArray = tempStr.split(",",-1);
         }
         if(returnStrArray == null) {
             returnStrArray = new String[0];

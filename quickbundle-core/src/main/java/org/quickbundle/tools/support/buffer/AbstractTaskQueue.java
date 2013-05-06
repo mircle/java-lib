@@ -91,7 +91,7 @@ public abstract class AbstractTaskQueue<E> {
 	/**
 	 * 尝试刷新
 	 */
-	public final void tryFlush() {
+	public void tryFlush() {
 		// 防止并发刷新
 		if (!flushLock.tryLock()) {
 			return;

@@ -333,6 +333,16 @@ public class RmIdFactory implements IRmIdFactory{
     }
     
     /**
+     * 获取单个唯一ID，Long格式
+     * 
+     * @param tableName 表名
+     * @return 返回内存中自增长的ID，未找到返回null
+     */
+    public static Long requestIdLong(String tableName) {
+    	return new Long(requestId(tableName));
+    }
+    
+    /**
      * 批量获取唯一ID
      * @param tableName 表名
      * @param length 批量数
@@ -343,6 +353,21 @@ public class RmIdFactory implements IRmIdFactory{
     		return new String[0];
     	}
     	return getIdFactory().requestIdInner(tableName.toUpperCase(), length);
+    }
+    
+    /**
+     * 批量获取唯一ID，Long[]格式
+     * @param tableName 表名
+     * @param length 批量数
+     * @return 返回内存中自增长的ID，未找到返回null
+     */
+    public static Long[] requestIdLong(String tableName, int length) {
+    	String[] ids = requestId(tableName, length);
+    	Long[] result = new Long[length];
+    	for (int i = 0; i < ids.length; i++) {
+    		result[i] = new Long(ids[i]);
+		}
+    	return result;
     }
     
 	//全局单例
