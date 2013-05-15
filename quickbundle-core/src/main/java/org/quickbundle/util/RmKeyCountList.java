@@ -1,9 +1,13 @@
 package org.quickbundle.util;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import org.quickbundle.project.tools.RmObjectMapper;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class RmKeyCountList<E> {
 	private RmSequenceMap<E, Long> mkc = new RmSequenceMap<E, Long>();
@@ -37,33 +41,45 @@ public class RmKeyCountList<E> {
 	}
 	
 	public String getJsonCount() {
-		JSONArray ja = new JSONArray();
+		List<Long> result = new ArrayList<Long>();
 		for (Map.Entry<E, Long> en : mkc.entrySet()) {
 			Long count = en.getValue();
-			ja.add(count);
+			result.add(count);
 		}
-		return ja.toString();
+		try {
+			return RmObjectMapper.getInstance().writeValueAsString(result);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public String getJsonKey() {
-		JSONArray ja = new JSONArray();
+		List<E> result = new ArrayList<E>();
 		for (Map.Entry<E, Long> en : mkc.entrySet()) {
 			E key = en.getKey();
-			ja.add(key);
+			result.add(key);
 		}
-		return ja.toString();
+		try {
+			return RmObjectMapper.getInstance().writeValueAsString(result);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public String getJsonKeyCount() {
-		JSONArray ja = new JSONArray();
+		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 		for (Map.Entry<E, Long> en : mkc.entrySet()) {
 			E key = en.getKey();
 			long count = en.getValue();
-			JSONObject jo = new JSONObject();
-			jo.put("value", count);
-			jo.put("text", key);
-			ja.add(jo);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("value", count);
+			map.put("text", key);
+			result.add(map);
 		}
-		return ja.toString();
+		try {
+			return RmObjectMapper.getInstance().writeValueAsString(result);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

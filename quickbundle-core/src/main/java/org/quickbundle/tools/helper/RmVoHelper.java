@@ -1,6 +1,7 @@
 package org.quickbundle.tools.helper;
 
 import java.beans.PropertyDescriptor;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -16,13 +17,10 @@ import java.util.TreeMap;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JsonConfig;
-
 import org.quickbundle.ICoreConstants;
 import org.quickbundle.base.exception.RmRuntimeException;
 import org.quickbundle.itf.ITransctVoField;
-import org.quickbundle.project.tools.RmJsonConfig;
+import org.quickbundle.project.tools.RmObjectMapper;
 import org.quickbundle.tools.context.RmBeanHelper;
 import org.quickbundle.tools.support.log.RmLogHelper;
 import org.quickbundle.util.RmSequenceMap;
@@ -30,6 +28,16 @@ import org.quickbundle.util.RmSequenceSet;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.NotReadablePropertyException;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.BeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.BeanSerializer;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter.SerializeExceptFilter;
 
 /**
  * 作用是实现自动处理VO操作中的一些事情
@@ -399,33 +407,33 @@ public final class RmVoHelper implements ICoreConstants {
     
     /**
      * 回写List对象到行编辑模式的表格
-     * @param namespace 
+     * @param namespace
      * @param lvo
      * @param ignoreName
-     * @param jc JsonConfig
+     * @param om
      * @return
+     * @throws JsonProcessingException
      */
-    public static String writeBackListToRowTable(String namespace, List lvo, String[] ignoreName, JsonConfig jc) {
+    public static String writeBackListToRowTable(String namespace, List lvo, final String[] ignoreName, ObjectMapper om) {
     	if(lvo == null || lvo.size() == 0) {
     		return "";
     	}
+    	//TODO ignoreName
+    	if(om == null) {
+    		om = RmObjectMapper.getInstance();
+    	}
     	StringBuilder result = new StringBuilder();
-    	if(jc == null) {
-    		jc = RmJsonConfig.getNewInstance();
-    	}
-    	if(ignoreName != null) {
-    		for(String name : ignoreName) {
-    			jc.addIgnoreFieldAnnotation(name);
-    		}
-    	}
-    	JSONArray ja = JSONArray.fromObject(lvo, jc);
     	result.append("jQuery(function(){\n");
     	result.append("writeBackListToRowTable(");
     	result.append("'");
     	result.append(namespace);
     	result.append("'");
     	result.append(", ");
-    	result.append(ja.toString());
+    	try {
+			result.append(om.writeValueAsString(lvo));
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
     	result.append(");");
     	result.append("\n});");
     	return result.toString();

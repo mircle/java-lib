@@ -3,7 +3,7 @@ package org.quickbundle.third.spring.http.converter.json;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class RmObjectMapper extends ObjectMapper {
+public class RmObjectMapperSpringWeb extends ObjectMapper {
 	private static final long serialVersionUID = 1L;
 	
 	boolean writeNumbersAsStrings = false;
@@ -18,7 +18,7 @@ public class RmObjectMapper extends ObjectMapper {
 		super.configure(JsonGenerator.Feature.WRITE_NUMBERS_AS_STRINGS, writeNumbersAsStrings);
 	}
 
-	public RmObjectMapper() {
+	public RmObjectMapperSpringWeb() {
 		super();
 	}
 }
