@@ -22,13 +22,7 @@ public class TestJackson {
 		
 		try {
 			System.out.println(RmObjectMapper.getInstance().readValue("{\"a\":{\"1\":1,\"2\":2},\"b\":3}", HashMap.class).get("a").getClass());
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
